@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+/*
+ * ROUTES COMPONENT
+ * AQUI SE COLOCAN TODAS LAS RUTAS Y SE ENVIA LA TOOLBAR
+ * QUE ES EL COMPONENTE DONDE VAN TODAS LAS RUTAS DE LA APP
+ *
+ */
 
-function App() {
-  const [count, setCount] = useState(0)
+import {
+    createBrowserRouter,
+    RouterProvider
+} from  'react-router-dom';
+import Login from './scenes/login' ;
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+const session = false;
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: session ?  <h1> Roots </h1> : <Login />
+    }
+]);
+
+export default function App(){
+    return(
+        <RouterProvider router={router}/>
+    );
 }
 
-export default App
+/*
+    DEBO HACER EL CONTROL DE LOGIN AQUI, O HACER 
+    UNA LOGICA PARA ESE CONTROL DESDE EL FRONT END
+    SI CUMPLE CON TENER UNA SESION ABIERTA SE ENVIA AL
+    ROUTER PROVIDER, DE NO SER ASI SE ENVIA AL LOGIN
+
+    LA LOGICA SE HARA EL COMPONENTE DE LA APP,
+    QUIZA UN MIDDLE WAR
+*/
+
+
