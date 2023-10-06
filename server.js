@@ -1,14 +1,39 @@
 const http = require('http');
+const fs = require('fs');
+const { readConfig }= require('./helpers/readFiles');
 
-const hostname = '127.0.0.1';
-const port = 3000;
+class Server{
+    constructor(){
+        this.envs = readConfig();
 
-const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Hello wordl\n');
-});
 
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
+        this.server = http.createServer(this.routes); 
+    }
+
+    //ROUTES LOGIC
+    routes(req, res){
+        let url = req.url;
+        url = url.split('/');
+        url.shift();
+        console.log(url);
+
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/plain');
+        res.end('Hello world');
+    }
+
+    listener(){
+        this.server.listen(this.envs.PORT, this.envs.HOSTNAME, () => {
+            console.log(`Server running at http://${this.envs.PORT}:${this.envs.HOSTNAME}/`);
+        });
+    }
+}
+
+const server = new Server();
+server.listener();
+
+
+
+// ADD ENVIORMENT VARIABLES
+
+
