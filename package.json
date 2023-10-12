@@ -2,17 +2,22 @@
   "name": "nested",
   "version": "1.0.0",
   "description": "Read me file",
-  "main": "index.js",
+  "main": "server.ts",
   "scripts": {
-    "start": "npx nodemon server.js"
+    "build": "tsc",
+    "start": "nodemon app.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "@types/node": "^20.8.4",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
   },
   "dependencies": {
+    "dotenv": "^16.3.1",
     "jsonwebtoken": "^9.0.2"
   }
 }
