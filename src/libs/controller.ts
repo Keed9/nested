@@ -9,9 +9,9 @@ export default class Controller{
     public body( req: http.IncomingMessage, res: http.ServerResponse, callback: any){
         let buffer: string = ''
         req.on( 'data', chunk => buffer += chunk );
-        req.on( 'end', () => {
+        req.on( 'end', async () => {
             this.data = buffer;
-            callback(this.data)
+            await callback(this.data);
         });
     }
 }

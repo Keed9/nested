@@ -3,11 +3,17 @@ import * as http from 'http';
 
 import Session from './../helpers/sessions';
 import Controller from './../libs/controller';
+import UserModel from './../models/user.model';
+import IUser from './../interfaces/user.interface';
 
 
 export default class UserController extends Controller{
+
+    private userModel: UserModel | null = null;
+    
     constructor( req: http.IncomingMessage, res: http.ServerResponse ){
         super(); //INITIALIZE CONTROLLER CLASS
+        this.userModel = new UserModel();
     }
 
     public async getLogin(req: http.IncomingMessage, res: http.ServerResponse){
@@ -42,13 +48,19 @@ export default class UserController extends Controller{
         }
         
         
-        const data = this.body( req, res, (data: string) => {
-            //PRINT FOR DEV ONLY
-            //console.log( JSON.parse( data ) );
-            const token: string = Session.newSession('12345');
-            res.setHeader('token', token);
-            res.writeHead( 200, { 'Content-Type': 'application/json' });
-            res.end( data );
+        const data = this.body( req, res,  async (data: string) => {
+            try{ 
+
+                const { email, pwd } = JSON.parse( data ); 
+                await this.userModel?.getByEmail(email);
+                //console.log(user);
+                const token: string = Session.newSession(email);
+                res.setHeader('token', token);
+                res.writeHead( 200, { 'Content-Type': 'application/json' });
+                res.end( JSON.stringify({ email, pwd }) );
+            }catch( err: any ){
+                console.log(err);
+            }
         });
     }
 }
