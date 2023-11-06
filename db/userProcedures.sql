@@ -5,7 +5,6 @@ DELIMITER //
     CREATE PROCEDURE SP_GET_USER(
         IN _ID VARCHAR(150),
         IN _EMAIL VARCHAR(150),
-        IN _PWD VARCHAR(255),
         IN _OPT VARCHAR(15)
     )
     BEGIN
@@ -14,8 +13,10 @@ DELIMITER //
                 SELECT * FROM V_GET_USER WHERE UUID = _ID;
 
             WHEN _OPT = 'EMAIL' THEN
-                SELECT * FROM V_GET_USER WHERE EMAIL = _EMAIL AND PWD = _PWD;
+                SELECT * FROM V_GET_USER WHERE EMAIL = _EMAIL;
         END CASE;
 
     END;
 DELIMITER ;
+
+CALL NESTED.SP_GET_USER('', 'keed@gmail.com', 'EMAIL');

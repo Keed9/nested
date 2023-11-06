@@ -1,30 +1,104 @@
-import * as mysql from 'mysql2/promise';
+import mysql, { RowDataPacket } from 'mysql2/promise';
 import Model from './../libs/model';
 import IUser from './../interfaces/user.interface';
 
 
 
-export default class UserModel extends Model{
+export default class UserModel extends Model {
+    public user: IUser = {
+        uuid: '',
+        email: '',
+        pwd: '',
+        phone: '',
+        name: '',
+        curp: '',
+        avatar: '',
+        avenue: '',
+        extNumber: '',
+        intNumber: '',
+        city: '',
+        state: '',
+        country: '',
+        utype: '',
+        status: '' 
+    }; 
 
-    private user: IUser | null = null;
     constructor(){
         super();
     }
 
-    public async getByEmail( email: string ) {
-      try{
+    public async insert(user: IUser): Promise<string| null>{
+       return new Promise((resolve, reject) => {
+            const userData = Object.values(user);
+            userData.push('INSERT');
+            this.pool?.query<RowDataPacket[][]>(
+                'CALL SP_USERS(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+                userData,
+                (_err, rows) =>{ 
+                    if(_err){
+                        console.log(_err);
+                        return reject(null);
+                    }
+                    
+                    if(rows[0].length != 1){
+                        console.log('Cannot insert a row');
+                        return resolve(null);
+                    }
 
-        const result = await this.conn?.query(
-            "CALL SP_GET_USER(?, ?, ?)", 
-            ['', email, 'EMAIL']
-        );
-
-        await this.conn?.end();
-        return;
-      }catch( err: any ){
-        console.log(err);
-        return;
-      } 
+                    return resolve(rows[0][0][0]);
+            }); 
+       }); 
     }
-   
+
+    public async findById(id: string): Promise<IUser | null>{
+        return new Promise((resolve, reject) => {
+            this.pool?.query<RowDataPacket[][]>(
+                'CALL SP_GET_USER(?, ?, ?);',
+                [id, '', 'ID'],
+                (_err, rows) => {
+                    if(_err){
+                        console.log(_err);
+                        return reject(null);
+                    }
+
+                    if(rows[0].length != 1){
+                        return resolve(null);
+                    }
+
+                    let i = 0;
+                    Object.keys(this.user).forEach(key => {
+                        this.user[key as keyof typeof this.user] = rows[0][0][i];
+                        i++;
+                    });
+                    return resolve(this.user);
+                });
+        });
+    }
+
+    public async findByEmail( email: string ): Promise<IUser | null>{
+        return new Promise((resolve , reject) => {
+            this.pool?.query<RowDataPacket[][]>(
+                'CALL SP_GET_USER(?, ?, ?);', 
+                ['', email, 'EMAIL'],
+                (_err, rows)=>{
+                    if(_err){
+                        console.log(_err);
+                        return reject(null);
+                    }
+
+                    if(rows[0].length != 1){
+                        return resolve(null);
+                    }
+
+                    let i = 0;
+                    Object.keys(this.user).forEach(key => {
+                        this.user[key as keyof typeof this.user] = rows[0][0][i];
+                        i++;
+                    });
+                    return resolve(this.user);
+                })
+        });
+    }
 }
+
+

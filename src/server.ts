@@ -1,41 +1,57 @@
-import * as http from 'http';
-import * as fs from 'fs';
-import 'dotenv/config'
 
-import userRoutes from './routes/users.routes';
+import express, { Express, Application, Request, Response } from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import path from 'path';
+dotenv.config();
+
 
 export default class Server{
-    private port: string;
-    private host: string;
-    private server: http.Server ;
-    //private host = process.env.LOCAL_HOST;
+   private port: number | string = ''; 
+   private app: Application | null = null;
 
-    public constructor(){
-        //NULISH COALESCING OPERATOR (??)
-        //CHECK ONLY FOR UNDEFINED OR NULL
-        this.port = process.env.PORT?? '8080';
-        this.host = process.env.HOST?? '127.0.0.1';
+    constructor(){
+        this.port = process.env.PORT || 3000;
 
-        this.server = http.createServer(this.routes);
-    }
-
-    private routes( req: http.IncomingMessage, res: http.ServerResponse) {
-        const  url  = req.url ?? '/';
-        const route: string = url.split('/')[1];
-        switch( route ){
-            case 'users':
-                    userRoutes(req, res);
-                break;
-            default:
-                    res.writeHead(404, {'Content-Type': 'application/json'});
-                    res.end(JSON.stringify({message: 'Route not found mod', route}));
-                break;
+        if(!this.app){
+            this.app = express();
         }
+
+        this.middlewares();
+        this.routes();
     }
 
+    private middlewares(){
+        //CORS ROUTES
+        this.app?.use(cors());
+
+        //GET INFORMATION ON JSON FORMAT
+        this.app?.use(bodyParser.json());
+
+        //IT PARSES INCOMING REQUESTS WITH URL ENCODED PAYLOADS IS PASED
+        //ON A BODY PARSER
+        this.app?.use(bodyParser.urlencoded({extended: true}));
+
+        this.app?.use(bodyParser.raw());
+
+    }
+
+    private routes(){
+        //SPECIFY THE ROUTES TO USE
+        this.app?.use( '/users',require('./routes/user.route'));
+        this.app?.get('*', (req: Request, res: Response) => {
+            res.status(404).json({
+                message: 'Route not found'
+            });
+        });
+    }
+
+    //LISTEN SERVER
     public listener(){
-       this.server.listen(this.port, () => {
-            console.log(`Server running at => http://${this.host}:${this.port}/`);
-       }); 
+        this.app?.listen( this.port, () => {
+            console.log( `Server running at http://localhost:${this.port}`);
+        });
     }
 }
+

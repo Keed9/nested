@@ -1,33 +1,24 @@
-import * as mysql from 'mysql2';
-
-interface IDBConfig{
-    host: string,
-    usr: string,
-    pwd: string,
-    db: string
-};
+import mysql, { Pool, createPool } from 'mysql2';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export default class Model{
+    public pool: Pool | null = null; 
+
     constructor(){
-        this.createConnection();
-    }
-
-    private createConnection(){
         try{
+            this.pool = mysql.createPool({
+                connectionLimit: 10,
+                host: process.env.BD_HOST || '127.0.0.1',
+                user: process.env.BD_USR || 'keed',
+                password: process.env.DB_PWD || 'Kingslayer9k!!',
+                database: process.env.DB || 'NESTED',
+                rowsAsArray: true
+            });
 
-            this.conn = mysql.createConnection(this.iDBConfig)
-            console.log('Database succesfully connected');
-
-        }catch( err: any ){
-            console.log('Database not connected::', err);
-        }
+            console.log('Conecction succesfully');
+        }catch( err: any){
+           console.log('Somenthing went wrong trying connection pool'); 
+        }     
     }
-
-    public conn: mysql.Connection | null = null;
-    private iDBConfig: IDBConfig = {
-            host:  process.env.DB_HOST || '127.0.0.1',
-            usr: process.env.DB_USER || 'selector',
-            pwd: process.env.DB_PWD || '',
-            db: process.env.DB || 'nested'
-        }
 }
