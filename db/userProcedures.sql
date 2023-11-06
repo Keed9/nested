@@ -18,3 +18,5 @@ DELIMITER //
 
     END;
 DELIMITER ;
+
+CALL NESTED.SP_GET_USER('', 'keed@gmail.com', 'EMAIL');
