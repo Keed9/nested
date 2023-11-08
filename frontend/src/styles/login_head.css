@@ -1,0 +1,11 @@
+.head{
+    position: absolute;
+    width: 100%;
+    background-color: #014577;
+}
+
+.head>img{
+    width: 290px;
+    height: 73px;
+    padding: 1%;
+}
