@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { EditText, SubmitButton } from '../components/inputs';
+import { EditText, SubmitButton } from '../components/inputs.component';
 import emailValidator from 'email-validator';
 import { useNavigate } from "react-router-dom";
 

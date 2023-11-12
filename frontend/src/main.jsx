@@ -5,16 +5,24 @@ import {
   RouterProvider
 }from "react-router-dom";
 
-import Login from './pages/login';
+import Login from './routes/login.route';
+import Dashboard from './routes/dashboard.route';
+import Calendar from './widgets/calendar.widget';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <h1>Dashboard</h1>
+    element: <Dashboard />,
+    children: [
+      {
+        path: "calendar",
+        element: <Calendar />
+      }
+    ]
   },
   {
     path: "/login",
-    element: <Login />
+    element: <Login />,
   }
 ])
 
