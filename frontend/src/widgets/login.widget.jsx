@@ -15,10 +15,17 @@ export default function LoginForm() {
     const [pwdStatus, setPwdStatus] = useState(true);
 
     useEffect(() => {
-        //VERIFY TOKEN SESSION
-        const token = localStorage.getItem('token');
-        if(token != "undefined")
-            navigate("/");
+        const verifySession = async() => {
+            //VERIFY TOKEN SESSION
+            const user = await userModel.getUser();
+            console.log(user);
+            if(user)
+                navigate("/calendar/user.id");
+            
+        }
+
+        verifySession();
+
     }, []);
 
     return (
@@ -33,7 +40,7 @@ export default function LoginForm() {
                         const error = await userModel.login(email.value, pwd.value);
 
                         if(!error)
-                            navigate("/");
+                            navigate("/calendar");
                         
                         pwd.value = "";
                         setPwdStatus(false);

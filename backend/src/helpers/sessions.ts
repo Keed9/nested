@@ -63,7 +63,8 @@ export namespace Session{
                         .json({msg: 'User is not active anymore'});
 
 
-            Object.assign(req, {user: userModel.user.uuid});
+            res.locals.user = userModel.user.uuid;  
+            //Object.assign(req, {user: userModel.user.uuid});
             next(); 
         }catch(_err: any){
             console.log(_err);

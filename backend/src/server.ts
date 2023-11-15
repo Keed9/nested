@@ -40,6 +40,7 @@ export default class Server{
     private routes(){
         //SPECIFY THE ROUTES TO USE
         this.app?.use( '/users',require('./routes/user.route'));
+        this.app?.use( '/dashboard', require('./routes/dashboard.route'));
         this.app?.get('*', (req: Request, res: Response) => {
             res.status(404).json({
                 message: 'Route not found'

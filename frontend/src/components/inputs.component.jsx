@@ -1,3 +1,5 @@
+
+//STYLES
 import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/inputs.css';
 
@@ -12,6 +14,7 @@ function EditText ({type, id, placeholder, status = true, onKeyUp, onBlur, error
                 placeholder={placeholder}
                 onKeyUp={ e => onKeyUp ? onKeyUp(e.target) : "No keyup action"}
                 onBlur={ e => onBlur(e.target)}
+                status={status}
             />
             <small className={status ? "d-none" : "d-block"}>{error}</small>
         </>
@@ -30,7 +33,27 @@ function SubmitButton({value, id, action = null}){
     );
 }
 
+function ComboBox({id, status = true, error, options = []}){
+    return(
+        <>
+            <select 
+                className='form-control edit-text' 
+                id={id}
+                name={id}
+            >
+                {options.map( option =>
+                    <option value={option.value}>
+                        {option.text}
+                    </option>
+                )}
+            </select>
+            <small className={status ? "d-none" : "d-block"}>{error}</small>
+        </>
+    );
+}
+
 export {
     EditText,
-    SubmitButton
+    SubmitButton,
+    ComboBox
 }

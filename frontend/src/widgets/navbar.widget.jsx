@@ -6,7 +6,7 @@ import '../styles/navbar.css';
 import logo_nested from '../assets/logo_nested.png';
 import searchIcon from '../assets/search.svg';
 
-export default function Navbar(){
+export default function Navbar({userName}){
     return(
         <nav className="navbar navbar-expand-lg">
             <a href="/" className="navbar-brand">
@@ -24,7 +24,7 @@ export default function Navbar(){
                 </form>
                 <div className="d-flex justify-content-center w-25 user-card">
                     <p className='text-center mx-2 align-self-center mt-2'>
-                        {"Jhon Doe"}
+                        {userName}
                     </p>
                     <img className="rounded-circle mx-3" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dXNlcnxlbnwwfHwwfHx8MA%3D%3D" alt="" />
                 </div>

@@ -27,13 +27,31 @@ export default class UserModel extends Model {
         super();
     }
 
-    public async insert(user: IUser): Promise<string| null>{
+    public async insert(user: IUser, admin: string): Promise<string| null>{
        return new Promise((resolve, reject) => {
-            const userData = Object.values(user);
-            userData.push('INSERT');
+            //const userData = Object.values(user);
+            //userData.push('INSERT');
             this.pool?.query<RowDataPacket[][]>(
                 'CALL SP_USERS(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
-                userData,
+                [
+                    user.email, 
+                    user.pwd, 
+                    user.phone, 
+                    user.fName, 
+                    user.lName, 
+                    user.curp, 
+                    '', 
+                    user.avenue, 
+                    user.extNumber, 
+                    '',
+                    user.city,
+                    user.state,
+                    user.country,
+                    user.utype,
+                    admin,
+                    '',
+                    'INSERT'
+                ],
                 (_err, rows) =>{ 
                     if(_err){
                         console.log(_err);

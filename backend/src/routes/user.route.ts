@@ -27,8 +27,8 @@ router.post('/register', [
     check('city', 'City cannot be empty').notEmpty(),
     check('state', 'State cannot be empty').notEmpty(),
     check('country', 'Country cannot be empty').notEmpty(),
-    check('type').custom(Valids.justLetters),
-    check('admin', 'Admin cannot be empty').notEmpty(),
+    check('utype').custom(Valids.justLetters),
+    //check('admin', 'Admin cannot be empty').notEmpty(),
     Valids.checkAll,
     Session.verifySession 
 ], userController.register);

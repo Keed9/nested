@@ -40,7 +40,7 @@ input.edit-text-error::placeholder{
 }
 
 input.edit-text:focus{
-   border: none;
+    border: none;
     border-bottom: solid 3px #1575BA;
     background-color: transparent;
     color: #D9D9D9;
