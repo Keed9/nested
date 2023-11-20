@@ -5,6 +5,7 @@ import { validationResult } from 'express-validator';
 import UserController from '../controllers/users.controller';
 import { Valids } from '../middlewares/valids.middleware';
 import { Session } from '../helpers/sessions'; 
+import upload from '../helpers/multer.helper';
 
 const router: Router = Router();
 const userController: UserController = new UserController();
@@ -16,6 +17,7 @@ router.post('/login', [
 ], userController.login);
 
 router.post('/register', [
+    upload.single('avatar'),
     check('email', 'The mail is not valid, try with a valid one').isEmail(),
     check('pwd').custom(Valids.password),
     check('phone').custom(Valids.phone), 
@@ -32,6 +34,8 @@ router.post('/register', [
     Valids.checkAll,
     Session.verifySession 
 ], userController.register);
+
+router.post('/avatar/:uuid', upload.single('avatar'), userController.setImage);
 
 
 module.exports = router;

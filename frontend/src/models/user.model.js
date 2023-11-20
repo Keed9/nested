@@ -5,22 +5,38 @@ export default class UserModel{
         this.URL_BASE = process.env.URL_BASE;
     }
 
+    async setImage(image, userId){
+        try{
+            const formData = new FormData();
+            formData.set('avatar', image);
+            const response = await fetch(`${this.URL_BASE}/users/avatar/${userId}`,{
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.text();
+            console.log(result);
+        }catch(err){
+            console.log(err.message);
+            return err.message;
+        }
+    }
+
     async setUser(user){
         try {
             const response = await fetch(`${this.URL_BASE}/users/register`, {
                 method: "POST",
                 headers:{
-                    "Content-Type": "application/json",
                     "token": localStorage.getItem('token')
                 },
-                body: JSON.stringify(user)
+                body: user
             });
 
             const result = await response.json();
-            console.log(result);
+            return result;
         } catch (err) {
             console.log(err.message);
-            return false;
+            return err.message;
         }
     }
 

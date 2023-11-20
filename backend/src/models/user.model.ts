@@ -54,8 +54,8 @@ export default class UserModel extends Model {
                 ],
                 (_err, rows) =>{ 
                     if(_err){
-                        console.log(_err);
-                        return reject(null);
+                        console.log(_err.message);
+                        return reject(_err.message);
                     }
                     
                     if(rows[0].length != 1){

@@ -6,7 +6,6 @@ import dotenv from 'dotenv';
 import path from 'path';
 dotenv.config();
 
-
 export default class Server{
    private port: number | string = ''; 
    private app: Application | null = null;

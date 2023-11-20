@@ -39,7 +39,7 @@ export default function Dashboard(){
 
         <>
             <Navbar userName={user.name}/>
-            <div className="container-fluid vh-100 dashboard">
+            <div className="container-fluid dashboard">
                 <div className="row">
                     <Toolbar/>
                     <Outlet/>

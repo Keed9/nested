@@ -1,6 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Blinker:wght@300;700&family=Roboto:ital,wght@0,100;0,400;0,700;1,300&display=swap');
 
 .register{
     background-color: #003459;
     height: 100%;
     border:solid 2px #D9D9D9;
+}
+
+input[type="file"]{
+    background-color: transparent;
+    border: none;
+    border-bottom: 3px solid #1575BA;
+    color: #D9D9D9;
+    font-family: 'Roboto', sans-serif;
+    font-weight: lighter;
+    font-style: italic;
+    letter-spacing: 2px;
+    cursor: pointer;
+}
+
+input[type="file"]:focus{
+    background-color: transparent;
+    border: none;
+    border-bottom: 3px solid #1575BA;
+    color: #D9D9D9;
+    font-family: 'Roboto', sans-serif;
+    font-weight: lighter;
+    font-style: italic;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border: none;
 }

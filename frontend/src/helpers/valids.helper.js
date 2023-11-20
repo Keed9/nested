@@ -1,5 +1,5 @@
 
-const _justLettersRegexp = /^[a-zA-Z]+$/
+const _justLettersRegexp = /^[a-zA-Z\s]+$/
 const _pwdRegexp = /^((?=.+[A-Za-z])(?=.+\d)(?=.+[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,})$/;
 const _curp = /^[A-Z]{4}\d{6}[HM][A-Z]{5}\d{2}$/;
 const _phone = /^\d{8,12}$/;

@@ -42,7 +42,7 @@ function ComboBox({id, status = true, error, options = []}){
                 name={id}
             >
                 {options.map( option =>
-                    <option value={option.value}>
+                    <option value={option.value} id={option.value}>
                         {option.text}
                     </option>
                 )}

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import UserModel from './../models/user.model';
 import IUser from './../interfaces/user.interface';
 import { Session } from './../helpers/sessions';
+import upload from './../helpers/multer.helper';
 
 export default class UserController{
 
@@ -52,6 +53,7 @@ export default class UserController{
 
     public async register(req: Request, res: Response){
         try{
+            console.log(req.file);
             const iuser: IUser = req.body;
             const userModel: UserModel = new UserModel();
             const id: string | null  = await userModel.insert(iuser, res.locals.user);
@@ -64,7 +66,7 @@ export default class UserController{
         }catch( err: any ){
             console.log(err)
             res.status(500).json({
-                msg: 'Something went wrong inserting a new row'
+                msg: err
             });
         }
     }
@@ -93,6 +95,12 @@ export default class UserController{
             });
         }
     }
+
+    public async setImage(req: Request, res: Response){ 
+        res.status(200).json({body:req.body, file: req.file});
+    }
+
+
 }
 
 
