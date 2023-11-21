@@ -20,6 +20,7 @@ export default function Dashboard(){
         const getUser = async() => {
             try {
                 const __user = await userModel.getUser();
+                console.log(__user);
                 if(Object.keys(__user).length == 0)
                     navigate("/login");
 
@@ -38,7 +39,7 @@ export default function Dashboard(){
 
 
         <>
-            <Navbar userName={user.name}/>
+            <Navbar userName={user.name} avatar={user.avatar} curp={user.curp} id={user.uuid}/>
             <div className="container-fluid dashboard">
                 <div className="row">
                     <Toolbar/>

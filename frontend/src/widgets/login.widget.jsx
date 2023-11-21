@@ -18,7 +18,6 @@ export default function LoginForm() {
         const verifySession = async() => {
             //VERIFY TOKEN SESSION
             const user = await userModel.getUser();
-            console.log(user);
             if(user)
                 navigate("/calendar/user.id");
             
@@ -48,24 +47,24 @@ export default function LoginForm() {
                 >
                     <div className="mb-3">
                         <EditText 
-                            type="email"
-                            id="email" 
-                            placeholder="example@domain.com"
-                            status={emailStatus}
-                            error="The email is not valid"
-                            onBlur={(element) => 
+                            _type="email"
+                            _id="email" 
+                            _placeholder="example@domain.com"
+                            _status={emailStatus}
+                            _error="The email is not valid"
+                            _onBlur={(element) => 
                                 setEmailStatus(emailValidator.validate(element.value))
                             }
                         />
                     </div>
                     <div className="mb-3">
                         <EditText 
-                            type="password"
-                            id="pwd"
-                            placeholder="Password"
-                            status={pwdStatus}
-                            error="Password cannot be empty"
-                            onBlur={(element) => 
+                            _type="password"
+                            _id="pwd"
+                            _placeholder="Password"
+                            _status={pwdStatus}
+                            _error="Password cannot be empty"
+                            _onBlur={(element) => 
                                 setPwdStatus(element.value.length != 0)
                             }
                         />
@@ -73,7 +72,7 @@ export default function LoginForm() {
                     <div>
                         <SubmitButton 
                             value="Sign in"
-                            id="signin"
+                            _id="signin"
                         />
                     </div>
                 </form>

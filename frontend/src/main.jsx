@@ -9,6 +9,8 @@ import Login from './routes/login.route';
 import Dashboard from './routes/dashboard.route';
 import Calendar from './widgets/calendar.widget';
 import Register from './widgets/register.widget';
+import UpdateUser from './widgets/update.widget';
+import Profile from './widgets/profile.widget';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +24,14 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />
+      },
+      {
+        path: "update/:id",
+        element: <UpdateUser />
+      },
+      {
+        path: "user/:id",
+        element: <Profile />
       }
     ]
   },

@@ -2,52 +2,57 @@
 //STYLES
 import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/inputs.css';
+import { useState } from 'react';
 
-function EditText ({type, id, placeholder, status = true, onKeyUp, onBlur, error}){
+function EditText ({_type, _id, _placeholder, _status = true, _onKeyUp, _onBlur, _error, _value = false}){
+
+    const [value, setValue] = useState(_value || '');
+
     return(
         <>
             <input 
-                type={type}
-                name={id} 
-                id={id}
-                className={`form-control ${status ? "edit-text" : "edit-text-error"}`} 
-                placeholder={placeholder}
-                onKeyUp={ e => onKeyUp ? onKeyUp(e.target) : "No keyup action"}
-                onBlur={ e => onBlur(e.target)}
-                status={status}
+                type={_type}
+                name={_id} 
+                id={_id}
+                className={`form-control ${_status ? "edit-text" : "edit-text-error"}`} 
+                placeholder={_placeholder}
+                onKeyUp={ e => _onKeyUp ? onKeyUp(e.target) : "No keyup action"}
+                onBlur={ e => _onBlur(e.target)}
+                onChange={e => setValue(e.target.value)}
+                value={value}
             />
-            <small className={status ? "d-none" : "d-block"}>{error}</small>
+            <small className={_status ? "d-none" : "d-block"}>{_error}</small>
         </>
     );
 }
 
-function SubmitButton({value, id, action = null}){
+function SubmitButton({_value, _id, _action = null}){
     return(
         <input 
             type="submit" 
-            value={value} 
-            id={id}
+            value={_value} 
+            id={_id}
             className="form-control w-100"
-            onClick={(e) => action ? action(e) : "No action seted"}
+            onClick={(e) => _action ? _action(e) : "No action seted"}
         /> 
     );
 }
 
-function ComboBox({id, status = true, error, options = []}){
+function ComboBox({_id, _status = true, _error, _options = []}){
     return(
         <>
             <select 
                 className='form-control edit-text' 
-                id={id}
-                name={id}
+                id={_id}
+                name={_id}
             >
-                {options.map( option =>
+                {_options.map( option =>
                     <option value={option.value} id={option.value}>
                         {option.text}
                     </option>
                 )}
             </select>
-            <small className={status ? "d-none" : "d-block"}>{error}</small>
+            <small className={_status ? "d-none" : "d-block"}>{_error}</small>
         </>
     );
 }

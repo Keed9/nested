@@ -22,6 +22,28 @@ export default class UserModel{
         }
     }
 
+    async update(user){
+        try {
+            const response = await fetch(`${this.URL_BASE}/users/update`, {
+                method: 'POST',
+                headers:{
+                    "token": localStorage.getItem('token')
+                },
+                body: user
+            });
+
+            const result = await response.json();
+            if(result.errors){
+                console.log(result);
+                throw new Error(result.errors);
+            }
+            console.log(result);
+        } catch ( err ) {
+            console.log(err);
+            return err;
+        }
+    }
+
     async setUser(user){
         try {
             const response = await fetch(`${this.URL_BASE}/users/register`, {
@@ -33,8 +55,51 @@ export default class UserModel{
             });
 
             const result = await response.json();
+            console.log(result);
             return result;
         } catch (err) {
+            console.log(err.message);
+            return err.message;
+        }
+    }
+
+    async getId(id = null){
+        try {
+            const response = await fetch(`${this.URL_BASE}/users/user`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': localStorage.getItem('token')
+                }
+            });
+
+            const { user } = await response.json();
+            return user.uuid;
+        } catch ( err ) {
+            console.log(err.message);
+            return err.message;
+        }
+    }
+
+    async findUserById(id = null){
+        try {
+            const url = id 
+                ? `${this.URL_BASE}/users/${id}`
+                : `${this.URL_BASE}/users/user`
+
+            console.log(url);
+
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': localStorage.getItem('token')
+                }
+            });
+
+            const {user} = await response.json();
+            return user;
+        } catch ( err ) {
             console.log(err.message);
             return err.message;
         }
@@ -66,7 +131,8 @@ export default class UserModel{
             if(result.msg)
                 throw new Error(result.msg);
 
-            return result.user;
+            const { user } = result;
+            return user;
         } catch (err) {
             console.log(err.message);
             return null;
@@ -95,6 +161,23 @@ export default class UserModel{
             
         } catch (error) {
             return error.message;
+        }
+    }
+
+    async findAllByName(name){
+        try {
+            const response = await fetch(`${this.URL_BASE}/users/user/${name}`, {
+                method: 'GET',
+                headers: {
+                    'token': localStorage.getItem('token')
+                }
+            });
+
+            const { users } = await response.json();
+            return users;
+        } catch (_err) {
+            console.log(err.message);
+            return null;
         }
     }
 }

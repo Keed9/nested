@@ -1,9 +1,9 @@
 import { EditText, ComboBox, SubmitButton } from "../components/inputs.component";
 import UserModel from "../models/user.model";
 import { validate } from '../helpers/valids.helper';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import emailValidator from 'email-validator';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 //STYLES
 import 'bootstrap/dist/css/bootstrap.css';
@@ -17,7 +17,6 @@ export default function Register(){
     const [fNameStatus, setFNameStatus] = useState(true);
     const [lNameStatus, setLNameStatus] = useState(true);
     const [emailStatus, setEmailStatus] = useState(true);
-    const [pwdStatus, setPwdStatus] = useState(true);
     const [curpStatus, setCurpStatus] = useState(true);
     const [phoneStatus, setPhoneStatus] = useState(true);
     const [avenueStatus, setAvenueStatus] = useState(true);
@@ -51,54 +50,41 @@ export default function Register(){
                         <div className="row">
                             <div className="col-6 my-3">
                                 <EditText
-                                type="text"
-                                id="fName"
-                                placeholder="First name"
-                                onBlur={(element) => {
+                                _type="text"
+                                _id="fName"
+                                _placeholder="First name"
+                                _onBlur={(element) => {
                                         setFNameStatus(validate(element.value, 'justLetters'))
                                     }
                                 }
-                                error="The name must have only letters"
-                                status={fNameStatus}
+                                _error="The name must have only letters"
+                                _status={fNameStatus}
                                 />
                             </div>
                             <div className="col-6 my-3">
                                 <EditText
-                                    type="text"
-                                    id="lName"
-                                    placeholder="Last name"
-                                    onBlur={(element) => {
+                                    _type="text"
+                                    _id="lName"
+                                    _placeholder="Last name"
+                                    _onBlur={(element) => {
                                             setLNameStatus(validate(element.value, 'justLetters'))
                                         }
                                     }
-                                    error="The last name must have only letters"
-                                    status={lNameStatus}
+                                    _error="The last name must have only letters"
+                                    _status={lNameStatus}
                                 />
                             </div>
                             <div className="col-12 my-3">
                                 <EditText
-                                    type="email"
-                                    id="email"
-                                    placeholder="email@example.com"
-                                    onBlur={(element) => {
+                                    _type="email"
+                                    _id="email"
+                                    _placeholder="email@example.com"
+                                    _onBlur={(element) => {
                                             setEmailStatus(emailValidator.validate(element.value))
                                         }
                                     }
-                                    error="Email not valid"
-                                    status={emailStatus}
-                                />
-                            </div>
-                            <div className="col-12 my-3">
-                                <EditText
-                                    type="pwd"
-                                    id="pwd"
-                                    placeholder="Password"
-                                    onBlur={(element) => {
-                                            setPwdStatus(validate(element.value, "pwd"));
-                                        }
-                                    }
-                                    error="Password must have at least one special character, letters, numbers and must be eight characters long"
-                                    status={pwdStatus}
+                                    _error="Email not valid"
+                                    _status={emailStatus}
                                 />
                             </div>
                             <div className="col-12 my-3">
@@ -125,34 +111,34 @@ export default function Register(){
                     </div>
                     <div className="col-4 my-3">
                         <EditText
-                            type="text"
-                            id="phone"
-                            placeholder="Phone"
-                            onBlur={(element) => {
+                            _type="text"
+                            _id="phone"
+                            _placeholder="Phone"
+                            _onBlur={(element) => {
                                     setPhoneStatus(validate(element.value, "phone"))
                                 }
                             }
-                            error="Phone not valid"
-                            status={phoneStatus}
+                            _error="Phone not valid"
+                            _status={phoneStatus}
                         />
                     </div>
                     <div className="col-4 my-3">
                         <EditText
-                            type="text"
-                            id="curp"
-                            placeholder="Curp"
-                            onBlur={(element) => {
+                            _type="text"
+                            _id="curp"
+                            _placeholder="Curp"
+                            _onBlur={(element) => {
                                     setCurpStatus(validate(element.value, "curp"))
                                 }
                             }
-                            error="Curp not valid"
-                            status={curpStatus}
+                            _error="Curp not valid"
+                            _status={curpStatus}
                         />
                     </div>
                     <div className="col-4 my-3">
                         <ComboBox
-                            id="utype"
-                            options={[
+                            _id="utype"
+                            _options={[
                                 {
                                     value: "P",
                                     text: "Patient"
@@ -170,73 +156,73 @@ export default function Register(){
                     </div>
                     <div className="col-8 my-3">
                         <EditText
-                            type="text"
-                            id="avenue"
-                            placeholder="Avenue"
-                            onBlur={(element) => {
+                            _type="text"
+                            _id="avenue"
+                            _placeholder="Avenue"
+                            _onBlur={(element) => {
                                     setAvenueStatus(element.value.length > 0);
                                 }
                             }
-                            error="Avenue cannot be empty"
-                            status={avenueStatus}
+                            _error="Avenue cannot be empty"
+                            _status={avenueStatus}
                         />
                     </div>
                     <div className="col-2 my-3">
                         <EditText
-                            type="text"
-                            id="extNumber"
-                            placeholder="Ext num"
-                            onBlur={(element) => {
+                            _type="text"
+                            _id="extNumber"
+                            _placeholder="Ext num"
+                            _onBlur={(element) => {
                                     setExtNumberStatus(element.value > 0)
                                 }
                             }
-                            error="Exterior number cannot be null"
-                            status={extNumberStatus}
+                            _error="Exterior number cannot be null"
+                            _status={extNumberStatus}
                         />
                     </div>
                     <div className="col-4 my-3">
                         <EditText
-                            type="text"
-                            id="city"
-                            placeholder="City"
-                            onBlur={(element) => {
+                            _type="text"
+                            _id="city"
+                            _placeholder="City"
+                            _onBlur={(element) => {
                                     setCityStatus(validate(element.value, "justLetters"))
                                 }
                             }
-                            error="City must have just letters"
-                            status={cityStatus}
+                            _error="City must have just letters"
+                            _status={cityStatus}
                         />
                     </div>
                     <div className="col-4 my-3">
                         <EditText
-                            type="text"
-                            id="state"
-                            placeholder="State"
-                            onBlur={(element) => {
+                            _type="text"
+                            _id="state"
+                            _placeholder="State"
+                            _onBlur={(element) => {
                                     setStateStatus(validate(element.value, "justLetters"))
                                 }
                             }
-                            error="State must have only numbers"
-                            status={stateStatus}
+                            _error="State must have only numbers"
+                            _status={stateStatus}
                         />
                     </div>
                     <div className="col-4 my-3">
                         <EditText
-                            type="text"
-                            id="country"
-                            placeholder="country"
-                            onBlur={(element) => {
+                            _type="text"
+                            _id="country"
+                            _placeholder="country"
+                            _onBlur={(element) => {
                                     setCountryStatus(validate(element.value, "justLetters"))
                                 }
                             }
-                            error="State must have only numbers"
-                            status={countryStatus}
+                            _error="State must have only numbers"
+                            _status={countryStatus}
                         />
                     </div>
                     <div className="col-12 my-1">
                         <SubmitButton
-                            value="Register"
-                            action={async (e) => {
+                            _value="Register"
+                            _action={async (e) => {
                                 e.preventDefault();
                                 const form = document.getElementById('register');
                                 const inputFile = document.querySelector('input#avatar');
@@ -244,6 +230,7 @@ export default function Register(){
                                 const avatar = inputFile.files[0];
 
                                 const formData = new FormData(form);
+                                formData.append('pwd', 'ChangeMe123!!');
                                 formData.delete('avatar');
 
                                 if(!avatar){

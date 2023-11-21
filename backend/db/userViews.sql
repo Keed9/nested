@@ -7,6 +7,8 @@ SELECT
         U.U_PWD AS PWD,
         U.U_PHONE AS PHONE,
         CONCAT(U.U_F_NAME, ' ', U.U_L_NAME) AS 'NAME',
+        U.U_F_NAME AS fName,
+        U.U_L_NAME AS lName,
         U.CURP AS CURP,
         U.U_IMG AS IMG,
         A.A_AVENUE AS AVENUE,

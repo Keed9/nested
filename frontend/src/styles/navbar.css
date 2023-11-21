@@ -36,3 +36,9 @@ nav{
     width: 64px;
     height: 64px;
 }
+
+.search-box{
+    top: 110%;
+    background-color: #003459;
+    border: 2px solid #D9D9D9;
+}

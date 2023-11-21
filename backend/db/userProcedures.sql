@@ -29,7 +29,7 @@ DELIMITER //
         IN _F_NAME          VARCHAR(150),
         IN _L_NAME          VARCHAR(150),
         IN _CURP            VARCHAR(60),
-        IN _IMG             MEDIUMBLOB,
+        IN _IMG             VARCHAR(255),
         IN _AVENUE          VARCHAR(150),
         IN _EXT_NUMBER      VARCHAR(4),
         IN _INT_NUMBER      VARCHAR(4),
@@ -70,7 +70,8 @@ DELIMITER //
                     U_PROF_MOD_DATE,
                     U_ADD_BY,
                     U_MOD_BY,
-                    U_PWD
+                    U_PWD,
+                    U_IMG
                 )
                 VALUES(
                     @USER_ID,
@@ -85,13 +86,81 @@ DELIMITER //
                     SYSDATE(),
                     _ADMIN,
                     _ADMIN,
-                    _PWD
+                    _PWD,
+                    _IMG
                 );
 
                 SELECT @USER_ID;
+
+            WHEN 'UPDATE' THEN
+                SET @USER_ID = (SELECT UUID FROM USERS WHERE U_EMAIL = _EMAIL);
+                SET @ADDRESS_ID = (SELECT U_ADDRESS FROM USERS WHERE U_EMAIL = _EMAIL);
+
+                UPDATE ADDRESSES 
+                    SET 
+                        A_AVENUE = _AVENUE, 
+                        A_EXT_NUMBER = _EXT_NUMBER, 
+                        A_CITY = _CITY, 
+                        A_STATE = _STATE, 
+                        A_COUNTRY = _COUNTRY
+                    WHERE A_UID = @ADDRESS_ID;
+
+
+                UPDATE USERS
+                    SET
+                        U_PHONE = _PHONE,
+                        U_F_NAME = _F_NAME,
+                        U_L_NAME = _L_NAME,
+                        CURP = _CURP,
+                        U_PROF_MOD_DATE = SYSDATE(),
+                        U_MOD_BY = _ADMIN,
+                        U_PWD = _PWD
+                    WHERE UUID = @USER_ID;
+
+                IF(_IMG != '') THEN
+                    UPDATE USERS 
+                        SET 
+                            U_IMG = _IMG 
+                        WHERE UUID = @USER_ID;
+                END IF;
+
+                SELECT @USER_ID;
+
         END CASE;
 
     END;
 DELIMITER ;
 
+USE NESTED;
+DELIMITER //
+    DROP PROCEDURE IF EXISTS SP_FIND_BY_NAME;
+    CREATE PROCEDURE SP_FIND_BY_NAME(
+        IN _NAME VARCHAR(160)
+    )
+    BEGIN
+        SELECT * FROM V_GET_USER WHERE 'NAME' LIKE CONCAT('%', _NAME, '%');
+    END //
+DELIMITER ;
+
 CALL NESTED.SP_GET_USER('', 'keed@gmail.com', 'EMAIL');
+
+3803056d-71e5-11ee-b646-20c9d0784529
+CALL NESTED.SP_USERS(
+    'KEED@GMAIL.COM', 
+    '123', 
+    '8122887411', 
+    'MIGUEL', 
+    'MEDINA', 
+    'MAMO990524HNLDRG04', 
+    '', 
+    'INDEPENDENCIA', 
+    '133', 
+    '',
+    'APODACA', 
+    'NUEVO LEON', 
+    'MEXICO', 
+    'A', 
+    '3803056d-71e5-11ee-b646-20c9d0784529',
+    '', 
+    'UPDATE'
+);

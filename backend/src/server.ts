@@ -33,11 +33,11 @@ export default class Server{
         this.app?.use(bodyParser.urlencoded({extended: true}));
 
         this.app?.use(bodyParser.raw());
-
     }
 
     private routes(){
         //SPECIFY THE ROUTES TO USE
+        this.app?.use('/uploads/',express.static(path.join(__dirname, 'uploads')));
         this.app?.use( '/users',require('./routes/user.route'));
         this.app?.use( '/dashboard', require('./routes/dashboard.route'));
         this.app?.get('*', (req: Request, res: Response) => {
