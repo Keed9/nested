@@ -40,6 +40,7 @@ export default class Server{
         this.app?.use('/uploads/',express.static(path.join(__dirname, 'uploads')));
         this.app?.use( '/users',require('./routes/user.route'));
         this.app?.use( '/dashboard', require('./routes/dashboard.route'));
+        this.app?.use( '/dates', require('./routes/dates.route'));
         this.app?.get('*', (req: Request, res: Response) => {
             res.status(404).json({
                 message: 'Route not found'

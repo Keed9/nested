@@ -4,6 +4,7 @@ import {
   createBrowserRouter,
   RouterProvider
 }from "react-router-dom";
+import UserModel from './models/user.model';
 
 import Login from './routes/login.route';
 import Dashboard from './routes/dashboard.route';
@@ -11,6 +12,7 @@ import Calendar from './widgets/calendar.widget';
 import Register from './widgets/register.widget';
 import UpdateUser from './widgets/update.widget';
 import Profile from './widgets/profile.widget';
+import Schedule from './widgets/schedule.widget';
 
 const router = createBrowserRouter([
   {
@@ -31,7 +33,16 @@ const router = createBrowserRouter([
       },
       {
         path: "user/:id",
-        element: <Profile />
+        element: <Profile />,
+        loader: async({params}) => {
+            const userModel = new UserModel();
+            return await userModel.findUserById(params.id);
+        },
+        id: "profile"
+      },
+      {
+        path: "schedule",
+        element: <Schedule/>
       }
     ]
   },

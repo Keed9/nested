@@ -85,7 +85,7 @@ export default class UserController{
             res.status(200).json({user: userModel.user});
         }catch( _err ){
             console.log(_err);
-            res.send(500).json({error: _err});
+            res.status(500).json({error: _err});
         }
     }
 

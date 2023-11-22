@@ -25,7 +25,7 @@ export default function Toolbar(){
                 </Link>
             </div>
             <div className="row pt-3">
-                <Link style={linkSyle} to={""}>
+                <Link style={linkSyle} to={"/schedule"}>
                     <img width={36} height={36} src={ScheduleIcon} alt="" />
                     <p>Schedule</p>
                 </Link>

@@ -16,7 +16,7 @@ export default function UserStrip({avatar, userName, id, curp}){
         >
             <img 
                 className="rounded-circle mx-3" 
-                rc={`${process.env.URL_BASE}/${avatar}`} 
+                src={avatar} 
                 alt=""
             />
             <p className='text-center mx-2 align-self-center mt-2'>
