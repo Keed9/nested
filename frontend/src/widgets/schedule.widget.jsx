@@ -37,10 +37,6 @@ export default function Schedule(){
                                 const form = document.getElementById("schedule");
                                 const formData = new FormData(form);
 
-                                for (let [clave, valor] of formData.entries()) {
-                                    console.log(`${clave}: ${valor}`);
-                                  }
-
                                 const datesModel = new DatesModel();
                                 await datesModel.setDate(formData);
                             }}
